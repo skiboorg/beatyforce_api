@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 from pytils.translit import slugify
-
+from brand.models import BrandItemLine
 
 class Item(models.Model):
-    line = models.ForeignKey('brand.BrandItemLine', verbose_name='Линейка',
+    line = models.ForeignKey(BrandItemLine, verbose_name='Линейка',
                                    on_delete=models.SET_NULL, blank=True, null=True, db_index=True,related_name='items')
     name = models.CharField('Название товара', max_length=255, blank=True, null=True)
     name_lower = models.CharField(max_length=255, blank=True, null=True,default='',editable=False)

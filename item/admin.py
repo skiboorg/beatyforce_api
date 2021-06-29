@@ -4,7 +4,7 @@ from .models import *
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['image_tag','name','price','is_active']
    # list_display = [field.name for field in Categories._meta.fields]
-   #  list_filter = ('line',)
+    list_filter = ('line',)
 
 
     # readonly_fields = ('order_code',  'total_price',  'created_tag')
