@@ -4,10 +4,8 @@ from pytils.translit import slugify
 
 
 class Item(models.Model):
-    brand = models.ForeignKey('brand.Brand', verbose_name='Бренд',
-                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,related_name='brand_items')
-    line = models.ForeignKey('brand.BrandCategory', verbose_name='Линейка',
-                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,related_name='line_items')
+    line = models.ForeignKey('brand.BrandItemLine', verbose_name='Линейка',
+                                   on_delete=models.SET_NULL, blank=True, null=True, db_index=True,related_name='items')
     name = models.CharField('Название товара', max_length=255, blank=True, null=True)
     name_lower = models.CharField(max_length=255, blank=True, null=True,default='',editable=False)
     name_slug = models.CharField(max_length=255, blank=True, null=True,db_index=True)
@@ -25,7 +23,7 @@ class Item(models.Model):
     def image_tag(self):
         return mark_safe('<img src="{}" width="100" height="100" />'.format(self.image.url))
 
-    image_tag.short_description = 'Основная картинка'
+    image_tag.short_description = 'Изображение'
 
     def save(self, *args, **kwargs):
         slug = slugify(self.name)

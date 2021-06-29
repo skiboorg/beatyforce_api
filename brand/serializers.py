@@ -15,7 +15,17 @@ class BrandCountrySerializer(serializers.ModelSerializer):
         model = BrandCountry
         fields = '__all__'
 
-class BrandCategoryItemSerializer(serializers.ModelSerializer):
+class BrandCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BrandCategory
+        fields = '__all__'
+
+class BrandFeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BrandFeature
+        fields = '__all__'
+
+class BrandItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
@@ -31,16 +41,13 @@ class BrandCategoryItemSerializer(serializers.ModelSerializer):
         ]
 
 
-class BrandCategorySerializer(serializers.ModelSerializer):
-    line_items = BrandCategoryItemSerializer(many=True, required=False, read_only=True)
+class BrandLineSerializer(serializers.ModelSerializer):
+    items = BrandItemSerializer(many=True, required=False, read_only=True)
     class Meta:
-        model = BrandCategory
+        model = BrandItemLine
         fields = '__all__'
 
-class BrandFeatureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BrandFeature
-        fields = '__all__'
+
 
 
 class BrandIngredientSerializer(serializers.ModelSerializer):
@@ -67,14 +74,27 @@ class BrandPressSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BrandShortSerializer(serializers.ModelSerializer):
+class BrandFullSerializer(serializers.ModelSerializer):
+    country = BrandCountrySerializer(many=False, required=False, read_only=True)
     category = BrandCategorySerializer(many=True, required=False, read_only=True)
+    features = BrandFeatureSerializer(many=True, required=False, read_only=True)
+    ingredients = BrandIngredientSerializer(many=True, required=False, read_only=True)
+    feedbacks = BrandFeedbackSerializer(many=True, required=False, read_only=True)
+    videos = BrandVideoSerializer(many=True, required=False, read_only=True)
+    press = BrandPressSerializer(many=True, required=False, read_only=True)
+    class Meta:
+        model = Brand
+        fields = '__all__'
+
+class BrandShortSerializer(serializers.ModelSerializer):
+    lines = BrandLineSerializer(many=True, required=False, read_only=True)
     class Meta:
         model = Brand
         fields = [
             'id',
             'name',
-            'category',
+            'name_slug',
+            'lines',
             'logo'
         ]
 
@@ -82,4 +102,16 @@ class BrandGlobalCategorySerializer(serializers.ModelSerializer):
     brands = BrandShortSerializer(many=True, required=False, read_only=True)
     class Meta:
         model = BrandGlobalCategory
+        fields = '__all__'
+
+
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Banner
+        fields = '__all__'
+
+
+class VideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Video
         fields = '__all__'
