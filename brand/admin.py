@@ -27,7 +27,7 @@ class BrandItemLineAdmin(admin.ModelAdmin):
         model = BrandItemLine
 
 admin.site.register(Brand,BrandAdmin)
-admin.site.register(BrandItemLine,BrandItemLineAdmin)
+admin.site.register(BrandItemLine)
 admin.site.register(BrandCategory)
 admin.site.register(BrandCountry)
 admin.site.register(BrandPress)
