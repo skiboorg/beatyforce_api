@@ -27,3 +27,7 @@ class GetBanners(generics.ListAPIView):
 class GetVideos(generics.ListAPIView):
     serializer_class = VideoSerializer
     queryset = Video.objects.filter(is_active=True)
+
+class GetPress(generics.ListAPIView):
+    serializer_class = PressCategorySerializer
+    queryset = PressCategory.objects.all()

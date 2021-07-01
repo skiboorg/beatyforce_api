@@ -229,3 +229,38 @@ class Video(models.Model):
         ordering = ('order_num',)
         verbose_name = "Видео"
         verbose_name_plural = "Видео на главной"
+
+
+class PressCategory(models.Model):
+    order_num = models.IntegerField('Порядок вывода', default=100)
+    name = models.CharField('Название', max_length=230, blank=True, null=True)
+
+
+    def __str__(self):
+        return f'Категория прессы {self.name}'
+
+    class Meta:
+        # ordering = ('order_num',)
+        verbose_name = "Категория блока прессы"
+        verbose_name_plural = "Категории блока прессы"
+
+
+class Press(models.Model):
+    cat = models.ForeignKey(PressCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='Категория',
+                              related_name='items')
+    order_num = models.IntegerField('Порядок вывода', default=100)
+    logo = models.ImageField('Логотип ', upload_to='images/video/', blank=True, null=True)
+    image = models.ImageField('Картинка ', upload_to='images/video/', blank=True, null=True)
+    url = models.CharField('Ссылка', max_length=255, blank=True, null=True)
+    text = models.CharField('Текст', max_length=230, blank=True, null=True)
+    descr = models.TextField('Описание', blank=True, null=True)
+
+
+    def __str__(self):
+        return f'Пресса id {self.id}'
+
+    class Meta:
+        # ordering = ('order_num',)
+        verbose_name = "Элемент блока пресса"
+        verbose_name_plural = "Элементы блока пресса"
+

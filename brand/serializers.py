@@ -115,3 +115,14 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = '__all__'
+
+class PressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Press
+        fields = '__all__'
+
+class PressCategorySerializer(serializers.ModelSerializer):
+    items = PressSerializer(many=True, required=False, read_only=True)
+    class Meta:
+        model = PressCategory
+        fields = '__all__'
