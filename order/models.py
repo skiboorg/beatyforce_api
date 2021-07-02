@@ -23,6 +23,7 @@ class Order(models.Model):
     status = models.ForeignKey(OrderStatus, blank=True, null=True, default=None, on_delete=models.CASCADE,
                                verbose_name='Статус заказа')
     delivery = models.CharField('Тип доставки', max_length=255, blank=True, null=True)
+    delivery_address = models.TextField('Адрес доставки', blank=True, null=True)
     comment = models.TextField('Комментарий', blank=True, null=True)
 
 

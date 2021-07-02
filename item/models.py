@@ -2,14 +2,18 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from pytils.translit import slugify
 from brand.models import BrandItemLine
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Item(models.Model):
     line = models.ForeignKey(BrandItemLine, verbose_name='Линейка',
                                    on_delete=models.SET_NULL, blank=True, null=True, db_index=True,related_name='items')
     name = models.CharField('Название товара', max_length=255, blank=True, null=True)
     name_lower = models.CharField(max_length=255, blank=True, null=True,default='',editable=False)
-    name_slug = models.CharField(max_length=255, blank=True, null=True,db_index=True)
+    name_slug = models.CharField(max_length=255, blank=True, null=True,db_index=True, editable=False)
+
+    description = RichTextUploadingField('Описание', blank=True, null=True)
     price = models.IntegerField('Цена', blank=True, default=0, db_index=True)
+    price_text = models.CharField('Цена текст', max_length=255, blank=True, null=True, db_index=True)
     article = models.CharField('Артикул', max_length=50, blank=True, null=True)
     discount = models.IntegerField('Скидка', default=0)
     image = models.ImageField('Изображение товара', upload_to='images/catalog/items/', blank=True)

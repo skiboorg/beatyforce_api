@@ -2,9 +2,8 @@ from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.db import IntegrityError, transaction
-from rest_framework import exceptions, serializers
 from djoser.conf import settings
-
+from rest_framework import exceptions, serializers
 from .models import *
 from item.models import Item
 
@@ -25,7 +24,8 @@ class SimpleCartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = [
             'id',
-            'items'
+            'items',
+            'total_price'
         ]
 
 class ItemSerializer(serializers.ModelSerializer):
